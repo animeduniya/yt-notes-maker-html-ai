@@ -1,0 +1,56 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ff0055;
+}
+
+h1 {
+    font-size: 24px;
+    background: linear-gradient(90deg, #ff0055, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+input {
+    width: 90%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: #222;
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #ff0055;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#transcriptContainer {
+    display: none;
+    margin-top: 20px;
+}
+
+pre {
+    white-space: pre-wrap;
+    background: #222;
+    padding: 10px;
+    border-radius: 5px;
+}
