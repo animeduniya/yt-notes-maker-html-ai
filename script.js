@@ -1,4 +1,5 @@
-const CLIENT_ID = "388965281269-848les0kd3k867da98klvetvt7ackuor.apps.googleusercontent.com";
+const CLIENT_ID = "388965281269-848les0kd3k867da98klvetvt7ackuor.apps.googleusercontent.com";  
+const API_KEY = "AIzaSyD_64PJs5rFmAl_U1ON983bihNwMzy3nGc";  
 const SCOPES = "https://www.googleapis.com/auth/youtube.force-ssl";
 
 function authenticate() {
@@ -9,7 +10,7 @@ function authenticate() {
 }
 
 function loadClient() {
-    gapi.client.setApiKey("AIzaSyD_64PJs5rFmAl_U1ON983bihNwMzy3nGc");
+    gapi.client.setApiKey(API_KEY);
     gapi.client.load("youtube", "v3")
         .then(() => console.log("✅ GAPI client loaded"))
         .catch(error => console.error("❌ Error loading GAPI client:", error));
@@ -25,10 +26,10 @@ function fetchTranscript(videoId) {
         console.log("🔄 API Response:", response); // Debug Log
 
         if (response.result.items.length > 0) {
-            const captions = response.result.items[0].snippet;
+            const captions = response.result.items.map(item => item.snippet.name).join("\n");
             document.getElementById("transcriptContainer").innerHTML = `
                 <p><strong>Transcript:</strong></p>
-                <p>${captions.name}</p>
+                <p>${captions}</p>
             `;
         } else {
             document.getElementById("transcriptContainer").innerHTML = `<p>❌ No transcript found.</p>`;
