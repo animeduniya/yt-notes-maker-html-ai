@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Transcript Fetcher</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>🔥 YouTube Transcript Fetcher 🔥</h1>
-        <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
-        <button onclick="handleAuthClick()">Get Transcript</button>
-        <div id="transcriptContainer"></div>
-    </div>
-
-    <!-- Load Google API -->
-    <script src="https://apis.google.com/js/api.js" onload="initGapi()"></script>
-    <script src="script.js"></script>
+    <h1>YouTube Transcript Fetcher</h1>
+    <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
+    <button onclick="handleAuthClick()">Fetch Transcript</button>
+    <div id="transcriptContainer"></div>
 </body>
 </html>
