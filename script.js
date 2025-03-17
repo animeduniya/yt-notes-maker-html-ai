@@ -4,30 +4,38 @@ const SCOPES = "https://www.googleapis.com/auth/youtube.force-ssl";
 function authenticate() {
     return gapi.auth2.getAuthInstance()
         .signIn({ scope: SCOPES })
-        .then(() => console.log("Signed in!"))
-        .catch(error => console.error("Error signing in:", error));
+        .then(() => console.log("✅ Signed in!"))
+        .catch(error => console.error("❌ Error signing in:", error));
 }
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyD_64PJs5rFmAl_U1ON983bihNwMzy3nGc");
-    gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(() => console.log("GAPI client loaded"))
-        .catch(error => console.error("Error loading GAPI client:", error));
+    gapi.client.load("youtube", "v3")
+        .then(() => console.log("✅ GAPI client loaded"))
+        .catch(error => console.error("❌ Error loading GAPI client:", error));
 }
 
 function fetchTranscript(videoId) {
+    console.log("📹 Fetching transcript for Video ID:", videoId); // Debug Log
+
     gapi.client.youtube.captions.list({
         "part": "snippet",
         "videoId": videoId
     }).then(response => {
+        console.log("🔄 API Response:", response); // Debug Log
+
         if (response.result.items.length > 0) {
-            const captions = response.result.items[0];
-            document.getElementById("transcriptContainer").innerHTML = `<p><strong>Transcript:</strong></p><p>${captions.snippet.name}</p>`;
+            const captions = response.result.items[0].snippet;
+            document.getElementById("transcriptContainer").innerHTML = `
+                <p><strong>Transcript:</strong></p>
+                <p>${captions.name}</p>
+            `;
         } else {
-            document.getElementById("transcriptContainer").innerHTML = `<p>No transcript found.</p>`;
+            document.getElementById("transcriptContainer").innerHTML = `<p>❌ No transcript found.</p>`;
         }
     }).catch(error => {
-        console.error("Error fetching transcript:", error);
+        console.error("❌ Error fetching transcript:", error);
+        document.getElementById("transcriptContainer").innerHTML = `<p>❌ Error fetching transcript. Check console.</p>`;
     });
 }
 
@@ -35,10 +43,13 @@ function handleAuthClick() {
     authenticate().then(() => {
         let videoUrl = document.getElementById("videoUrl").value;
         let videoId = extractVideoID(videoUrl);
+
+        console.log("🔎 Extracted Video ID:", videoId); // Debug Log
+
         if (videoId) {
             fetchTranscript(videoId);
         } else {
-            alert("Invalid YouTube URL");
+            alert("❌ Invalid YouTube URL");
         }
     });
 }
@@ -49,7 +60,11 @@ function extractVideoID(url) {
 }
 
 function initGapi() {
+    console.log("🔄 Initializing GAPI..."); // Debug Log
     gapi.load("client:auth2", () => {
-        gapi.auth2.init({ client_id: CLIENT_ID });
+        gapi.auth2.init({ client_id: CLIENT_ID }).then(() => {
+            console.log("✅ GAPI initialized!");
+            loadClient();
+        });
     });
 }
